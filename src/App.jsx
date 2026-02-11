@@ -1,8 +1,9 @@
 import "./App.scss";
+import Layout from "./components/layout/Layout";
+import { CardContainer, Card } from "./components/UI/Card";
 
 function App() {
     const loggedInUser = "User";
-
     const modulelist = [
         {
             ModuleID: 1,
@@ -95,7 +96,6 @@ function App() {
                 "https://images.freeimages.com/images/small-previews/402/rocket-in-the-museum-1450195.jpg",
         },
     ];
-
     const studentlist = [
         {
             UserID: 275,
@@ -240,59 +240,35 @@ function App() {
     ];
 
     return (
-        <div className="layout">
-            <header>
-                <h1>Basic React Demo</h1>
-                <p className="welcome">Welcome {loggedInUser}!</p>
-            </header>
+        <Layout loggedInUser={loggedInUser}>
+            <h1>Homepage</h1>
 
-            <nav>
-                <div className="navItem">
-                    <a to="/">Home</a>
-                </div>
+            <h1>Modules</h1>
+            <CardContainer>
+                {modulelist.map((module) => (
+                    <div className="moduleCard" key={module.ModuleCode}>
+                        <Card>
+                            <p>{module.ModuleCode}</p>
+                            <p>{module.ModuleName}</p>
+                            <img src={module.ModuleImageURL} />
+                        </Card>
+                    </div>
+                ))}
+            </CardContainer>
 
-                <div className="navItem">
-                    <a to="/modules">Modules</a>
-                </div>
-
-                <div className="navItem">
-                    <a to="/students">Students</a>
-                </div>
-            </nav>
-
-            <main>
-                <h1>Homepage</h1>
-                <h1>Modules</h1>
-                <div className="cardContainer">
-                    {modulelist.map((module) => (
-                        <div className="moduleCard" key={module.ModuleCode}>
-                            <div className="card">
-                                <p>{module.ModuleCode}</p>
-                                <p>{module.ModuleName}</p>
-                                <img src={module.ModuleImageURL} />
-                            </div>
-                        </div>
-                    ))}
-                </div>
-
-                <h1>Students</h1>
-                <div className="cardContainer">
-                    {studentlist.map((student) => (
-                        <div className="studentCard" key={student.UserEmail}>
-                            <div className="card">
-                                <p>{student.UserEmail.substring(0,8)}</p>
-                                <p>{`${student.UserFirstname} ${student.UserLastname}`}</p>
-                                <img src={student.UserImageURL} />
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </main>
-
-            <footer>
-                <p className="thankyou">Thank you for using this system!</p>
-            </footer>
-        </div>
+            <h1>Students</h1>
+            <CardContainer>
+                {studentlist.map((student) => (
+                    <div className="studentCard" key={student.UserEmail}>
+                        <Card>
+                            <p>{student.UserEmail.substring(0, 8)}</p>
+                            <p>{`${student.UserFirstname} ${student.UserLastname}`}</p>
+                            <img src={student.UserImageURL} />
+                        </Card>
+                    </div>
+                ))}
+            </CardContainer>
+        </Layout>
     );
 }
 
