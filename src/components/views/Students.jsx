@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { CardContainer, Card } from "../UI/Card";
-import "./Students.scss";
+import { CardContainer } from "../UI/Card";
+import UserCard from "../entity/user/UserCard";
 
 function Students() {
     const newStudent = {
@@ -15,7 +15,7 @@ function Students() {
             "https://images.generated.photos/eL1-OlKDqGf1IaL_b2O8aSj7osDX_eFVHZEoJ0f3ZV0/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/NzYwNjc0LmpwZw.jpg",
         UserUsertypeName: "Student",
         UserYearName: "2022-23",
-    }
+    };
 
     const [students, setStudents] = useState(null);
 
@@ -23,14 +23,14 @@ function Students() {
     const apiURL = "https://softwarehub.uk/unibase/api";
     const myGroupEndpoint = `${apiURL}/users/groups/${myGroupID}`;
 
-    const apiGet = async (endpoint) => {
+    const apiGET = async (endpoint) => {
         const response = await fetch(endpoint);
         const result = await response.json();
         setStudents(result);
     };
 
     useEffect(() => {
-        apiGet(myGroupEndpoint)
+        apiGET(myGroupEndpoint);
     }, [myGroupEndpoint]);
 
     const handleAdd = (student) => {
@@ -45,18 +45,7 @@ function Students() {
             {!students ? <p>Loading records...</p> : (
                 <>
                     <CardContainer>
-                        {students.map((student) => (
-                            <div className="studentCard" key={student.UserID}>
-                                <Card>
-                                    <p>{student.UserEmail.substring(0, 8)}</p>
-                                    <p>{`${student.UserFirstname} ${student.UserLastname}`}</p>
-                                    <img
-                                        src={student.UserImageURL}
-                                        alt={student.UserEmail.substring(0, 8)}
-                                    />
-                                </Card>
-                            </div>
-                        ))}
+                        {students.map((student) => <UserCard key={student.UserID} user={student} />)}
                     </CardContainer>
                     <button onClick={() => handleAdd(newStudent)}>Add student</button>
                 </>

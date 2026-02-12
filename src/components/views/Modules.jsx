@@ -1,39 +1,31 @@
 import { useState, useEffect } from "react";
-import { CardContainer, Card } from "../UI/Card";
-import "./Modules.scss";
+import { CardContainer } from "../UI/Card";
+import ModuleCard from "../entity/module/ModuleCard";
 
 function Modules() {
     const [modules, setModules] = useState(null);
 
-    const apiURL = "https://softwarehub.uk/unibase/api/modules";
+    const loggedInUserGroup = 820;
+    const apiURL = "https://softwarehub.uk/unibase/api";
+    const myModulesEndpoint = `${apiURL}/modules/leader/${loggedInUserGroup}`;
 
-    const apiGet = async (endpoint) => {
+    const apiGET = async (endpoint) => {
         const response = await fetch(endpoint);
         const result = await response.json();
         setModules(result);
     };
 
     useEffect(() => {
-        apiGet(apiURL);
-    }, [apiURL]);
+        apiGET(myModulesEndpoint);
+    }, [myModulesEndpoint]);
 
     return (
         <>
             <h1>Modules</h1>
             {!modules ? <p>Loading records...</p> : (
-                <>
-                    <CardContainer>
-                        {modules.map((module) => (
-                            <div className="moduleCard" key={module.ModuleID}>
-                                <Card>
-                                    <p>{module.ModuleCode}</p>
-                                    <p>{module.ModuleName}</p>
-                                    <img src={module.ModuleImageURL} alt={module.ModuleName} />
-                                </Card>
-                            </div>
-                        ))}
-                    </CardContainer>
-                </>
+                <CardContainer>
+                    {modules.map((module) => <ModuleCard key={module.ModuleID} module={module} />)}
+                </CardContainer>
             )}
         </>
     );
