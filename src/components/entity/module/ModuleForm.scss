@@ -2,4 +2,43 @@ div.moduleForm {
     border: 1px solid lightgray;
     border-radius: 3px;
     padding: 20px;
+
+    div.FormTray {
+        width: 100%;
+
+        label, input, select {
+            display: block;
+            width: 100%;
+        }
+
+        $BorderGrey: lightgray;
+
+        select, input {
+            padding: 3px;
+            margin: 1px 0;
+            font-size: 100%;
+            border-radius: 0px;
+            border: 1px solid $BorderGrey;
+            background: white;
+
+            &:hover, &:focus {
+                outline-width: 1px;
+                outline-style: solid;
+                border-width: 1px;
+                border-style: solid;
+            }
+
+            &:hover {
+                border-color: $BorderGrey;
+                outline-color: $BorderGrey;
+            }
+
+            $DarkGreen: #16C7AF;
+
+            &:focus {
+                border-color: $DarkGreen;
+                outline-color: $DarkGreen;
+            }
+        }
+    }
 }
