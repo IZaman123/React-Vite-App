@@ -6,12 +6,11 @@ import Action from "../UI/Actions";
 import Spacer from "../UI/Spacer";
 
 function Modules() {
+    const apiURL = "https://softwarehub.uk/unibase/api";
+    const modulesEndpoint = `${apiURL}/modules`;
+
     const [modules, setModules] = useState(null);
     const [showForm, setShowForm] = useState(false);
-
-    const loggedInUserGroup = 820;
-    const apiURL = "https://softwarehub.uk/unibase/api";
-    const myModulesEndpoint = `${apiURL}/modules/leader/${loggedInUserGroup}`;
 
     const apiGET = async (endpoint) => {
         const response = await fetch(endpoint);
@@ -20,8 +19,8 @@ function Modules() {
     };
 
     useEffect(() => {
-        apiGET(myModulesEndpoint);
-    }, [myModulesEndpoint]);
+        apiGET(modulesEndpoint);
+    }, [modulesEndpoint]);
 
     const handleAdd = () => {
         setShowForm(true);
